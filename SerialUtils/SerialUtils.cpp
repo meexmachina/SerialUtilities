@@ -288,7 +288,8 @@ void SerialUtilsNotifier::notification_thread_func(void* instance)
 		if (GetMessage(&msg, nullptr, 0, 0))
 		{
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);	
+			DispatchMessage(&msg);
+			//Sleep(100);
 		}
 	}
 }

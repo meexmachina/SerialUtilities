@@ -1,3 +1,6 @@
 ﻿  stdafx.cpp
+  SerialUtilsException.cpp
   SerialUtils.cpp
+  GenException.cpp
+  Generating Code...
   SerialUtils.vcxproj -> D:\Developement\CurrentProjects\SerialPort\SerialUtils\Debug\SerialUtils.lib
