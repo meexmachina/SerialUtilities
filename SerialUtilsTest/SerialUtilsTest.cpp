@@ -21,11 +21,14 @@ void Callback(const SerialUtilsNotifier::EventType_en e, const std::string& comm
 int main()
 {
 	SerialUtilsNotifier::notification_handle handle = SerialUtilsNotifier::RegisterCallback(Callback);
-	SerialUtilsNotifier::PortList list = SerialUtilsNotifier::GetFriendlyPortsList();
+	SerialUtilsEnumerator::PortList list = SerialUtilsEnumerator::GetFriendlyPortsList();
 
+	printf("Press Enter to quit!\n");
 	getchar();
 
+	printf("Exiting\n");
 	SerialUtilsNotifier::UnregisterCallback(handle);
+	
     return 0;
 }
 
