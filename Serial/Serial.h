@@ -56,8 +56,6 @@
 // CSerialSync  - Serial communication with synchronized event handler
 // CSerialWnd   - Asynchronous serial support, which uses the Win32
 //                message queue for event notification.
-// CSerialMFC   - Preferred class to use in MFC-based GUI windows.
-// 
 //
 // Pros:
 // -----
@@ -101,8 +99,7 @@ public:
 		EEventRx80Full	   = EV_RX80FULL,	// Receive buffer is 80 percent full
 		EEventProviderEvt1 = EV_EVENT1,		// Provider specific event 1
 		EEventProviderEvt2 = EV_EVENT2,		// Provider specific event 2
-	} 
-	EEvent;
+	} EEvent;
 
 	// Baudrate
 	typedef enum
@@ -123,8 +120,7 @@ public:
 		EBaud115200  = CBR_115200,	// 115200 bits/sec
 		EBaud128000  = CBR_128000,	// 128000 bits/sec
 		EBaud256000  = CBR_256000,	// 256000 bits/sec
-	}
-	EBaudrate;
+	} EBaudrate;
 
 	// Data bits (5-8)
 	typedef enum
@@ -134,8 +130,7 @@ public:
 		EData6       =  6,			// 6 bits per byte
 		EData7       =  7,			// 7 bits per byte
 		EData8       =  8			// 8 bits per byte (default)
-	}
-	EDataBits;
+	} EDataBits;
 
 	// Parity scheme
 	typedef enum
@@ -146,8 +141,7 @@ public:
 		EParEven    = EVENPARITY,	// Even parity
 		EParMark    = MARKPARITY,	// Mark parity
 		EParSpace   = SPACEPARITY	// Space parity
-	}
-	EParity;
+	} EParity;
 
 	// Stop bits
 	typedef enum
@@ -156,8 +150,7 @@ public:
 		EStop1       = ONESTOPBIT,	// 1 stopbit (default)
 		EStop1_5     = ONE5STOPBITS,// 1.5 stopbit
 		EStop2       = TWOSTOPBITS	// 2 stopbits
-	} 
-	EStopBits;
+	} EStopBits;
 
 	// Handshaking
 	typedef enum
@@ -166,8 +159,7 @@ public:
 		EHandshakeOff			=  0,	// No handshaking
 		EHandshakeHardware		=  1,	// Hardware handshaking (RTS/CTS)
 		EHandshakeSoftware		=  2	// Software handshaking (XON/XOFF)
-	} 
-	EHandshake;
+	} EHandshake;
 
 	// Timeout settings
 	typedef enum
@@ -175,8 +167,7 @@ public:
 		EReadTimeoutUnknown		= -1,	// Unknown
 		EReadTimeoutNonblocking	=  0,	// Always return immediately
 		EReadTimeoutBlocking	=  1	// Block until everything is retrieved
-	}
-	EReadTimeout;
+	} EReadTimeout;
 
 	// Communication errors
 	typedef enum
@@ -190,8 +181,7 @@ public:
 		EErrorRxOver  = CE_RXOVER,	// Input buffer overflow, byte lost
 		EErrorParity  = CE_RXPARITY,// Input parity error
 		EErrorTxFull  = CE_TXFULL	// Output buffer full
-	}
-	EError;
+	} EError;
 
 	// Port availability
 	typedef enum
@@ -200,9 +190,7 @@ public:
 		EPortAvailable    =  0,		// Port is available
 		EPortNotAvailable =  1,		// Port is not present
 		EPortInUse        =  2		// Port is in use
-
-	} 
-	EPort;
+	} EPort;
 
 // Construction
 public:
