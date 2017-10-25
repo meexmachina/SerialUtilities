@@ -1,37 +1,26 @@
-========================================================================
-    STATIC LIBRARY : Serial Project Overview
-========================================================================
+CSerial(Ex/Wnd) - Win32 message-based wrapper for serial communications
 
-AppWizard has created this Serial library project for you.
+A lot of MS-Windows GUI based programs use a central message
+loop, so the application cannot block to wait for objects. This
+make serial communication difficult, because it isn't event
+driven using a message queue. This class makes the CSerial based
+classes suitable for use with such a messagequeue. Whenever
+an event occurs on the serial port, a user-defined message will
+be sent to a user-defined window. It can then use the standard
+message dispatching to handle the event.
 
-This file contains a summary of what you will find in each of the files that
-make up your Serial application.
+Pros:
+-----
+  - Easy to use
+  - Fully ANSI and Unicode aware
+  - Integrates easily in GUI applications and is intuitive to
+      use for GUI application programmers
 
+Cons:
+-----
+  - Uses a thread for each COM-port, which has been opened.
+  - More overhead, due to thread switching and message queues.
+  - Requires a window, but that's probably why you're using
+    this class.
 
-Serial.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
-
-Serial.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named Serial.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
-
-/////////////////////////////////////////////////////////////////////////////
+Copyright (C) 1999-2003 Ramon de Klein (Ramon.de.Klein@ict.nl)
