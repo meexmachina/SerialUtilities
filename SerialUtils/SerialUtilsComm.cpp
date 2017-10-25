@@ -17,10 +17,12 @@ SerialUtilsComm::~SerialUtilsComm()
 void SerialUtilsComm::OpenPort()
 {
 	TCHAR port_address[32] = { 0 };
+	int err;
 	wsprintf(port_address, L"\\\\.\\COM%d", port_number);
 
-	if (Open(port_address, 10000, 10000, true) != 0)
+	err = Open(port_address, 10000, 10000, true);
+	if (err != 0)
 	{
-		throw SerialUtilsException();
+		THROW_GEN_EXCEPTION("Port opening failed with error %d", err);
 	}
 }

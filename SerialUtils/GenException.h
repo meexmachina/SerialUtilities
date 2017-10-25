@@ -15,7 +15,7 @@
 #pragma comment(lib, "Ws2_32.lib")
 #pragma comment(lib, "WSock32.Lib")
 
-#define THROW_GEN_EXCEPTION(FMT)	(throw GenException(__FUNCTION__, FMT);)
+#define THROW_GEN_EXCEPTION(FMT, ...)	{throw GenException(__FUNCTION__, (FMT), (__VA_ARGS__));}
 
 class GenException : public std::exception
 {
