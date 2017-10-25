@@ -10,9 +10,9 @@
 #include <setupapi.h>
 #include <tuple>
 
-std::vector<std::tuple<unsigned int, std::wstring>> SerialUtilsEnumerator::ports_array;
+SerialUtilsEnumerator::PortList SerialUtilsEnumerator::ports_array;
 
-BOOL SerialUtilsEnumerator::UpdatePortListWMI()
+BOOL SerialUtilsEnumerator::UpdatePortListWMI(PortList& ports_array_local)
 {
 	//Initialize COM (Required by CEnumerateSerial::UsingWMI)
 	HRESULT hr = CoInitialize(nullptr);
@@ -35,7 +35,7 @@ BOOL SerialUtilsEnumerator::UpdatePortListWMI()
 	// The braces are intended to be so that memory leaks won't occur
 	{
 		//Set our output parameters to sane defaults
-		ports_array.clear();
+		ports_array_local.clear();
 		//names_array.clear();
 
 		//Create the WBEM locator
@@ -92,11 +92,11 @@ BOOL SerialUtilsEnumerator::UpdatePortListWMI()
 								std::wstring szName(varProperty2.bstrVal);
 								//names_array.push_back(szName);
 								;
-								ports_array.push_back(std::tuple<int, std::wstring>(nPort, szName));
+								ports_array_local.push_back(std::tuple<int, std::wstring>(nPort, szName));
 							}
 							else
 							{
-								ports_array.push_back(std::tuple<int, std::wstring>(nPort, _T("")));
+								ports_array_local.push_back(std::tuple<int, std::wstring>(nPort, _T("")));
 								//names_array.push_back(_T(""));
 							}
 						}
@@ -113,15 +113,46 @@ BOOL SerialUtilsEnumerator::UpdatePortListWMI()
 	return TRUE;
 }
 
-BOOL SerialUtilsEnumerator::UpdatePortListSetupAPI()
+BOOL SerialUtilsEnumerator::UpdatePortListSetupAPI(PortList& ports_array_local)
 {
 	//return QueryUsingSetupAPI(GUID_DEVINTERFACE_COMPORT, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
-	return QueryUsingSetupAPI(GUID_DEVINTERFACE_SERENUM_BUS_ENUMERATOR, DIGCF_PRESENT);
+	return QueryUsingSetupAPI(GUID_DEVINTERFACE_SERENUM_BUS_ENUMERATOR, DIGCF_PRESENT, ports_array_local);
 }
 
 BOOL SerialUtilsEnumerator::UpdatePortList()
 {
-	return TRUE;
+	BOOL resWMI = FALSE, resAPI = FALSE;
+	PortList wmi;
+	PortList api;
+
+	resAPI = UpdatePortListSetupAPI(api);
+	resWMI = UpdatePortListWMI(wmi);
+
+	if (resWMI && resAPI)
+	{
+		// TODO: union of both
+		ports_array.clear();
+		size_t sizeAPI = api.size();
+		size_t sizeWMI = wmi.size();
+
+		// For now just takes the one with more elements
+		if (sizeAPI > sizeWMI) ports_array = api;
+		else ports_array = wmi;
+		return TRUE;
+	}
+	else if (resWMI && !resAPI)
+	{
+		ports_array = wmi;
+		return TRUE;
+	}
+	else if (resAPI && !resWMI)
+	{
+		ports_array = api;
+		return TRUE;
+	}
+	
+	ports_array.clear();
+	return FALSE;
 }
 
 bool SerialUtilsEnumerator::IsNumeric(LPCSTR pszString, bool bIgnoreColon)
@@ -249,10 +280,10 @@ BOOL SerialUtilsEnumerator::RegQueryValueString(ATL::CRegKey& key, LPCTSTR lpVal
 	return TRUE;
 }
 
-BOOL SerialUtilsEnumerator::QueryUsingSetupAPI(const GUID& guid, DWORD dwFlags)
+BOOL SerialUtilsEnumerator::QueryUsingSetupAPI(const GUID& guid, DWORD dwFlags, PortList& ports_array_local)
 {
 	//Set our output parameters to sane defaults
-	ports_array.clear();
+	ports_array_local.clear();
 
 	//Create a "device information set" for the specified GUID
 	HDEVINFO hDevInfoSet = SetupDiGetClassDevs(&guid, nullptr, nullptr, dwFlags);
@@ -292,11 +323,11 @@ BOOL SerialUtilsEnumerator::QueryUsingSetupAPI(const GUID& guid, DWORD dwFlags)
 				if (QueryDeviceDescription(hDevInfoSet, devInfo, byFriendlyName))
 				{
 					std::wstring szName(reinterpret_cast<LPCTSTR>(byFriendlyName.m_pData));
-					ports_array.push_back(std::tuple<int, std::wstring>(nPort, szName));
+					ports_array_local.push_back(std::tuple<int, std::wstring>(nPort, szName));
 				}
 				else
 				{
-					ports_array.push_back(std::tuple<int, std::wstring>(nPort, _T("")));
+					ports_array_local.push_back(std::tuple<int, std::wstring>(nPort, _T("")));
 				}
 			}
 		}

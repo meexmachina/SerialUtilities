@@ -21,15 +21,15 @@ public:
 	typedef std::vector<std::tuple<unsigned int, std::wstring>> PortList;
 
 private:
-	static std::vector<std::tuple<unsigned int, std::wstring>> ports_array;
+	static PortList ports_array;
 
-	static BOOL UpdatePortListWMI();
-	static BOOL UpdatePortListSetupAPI();
+	static BOOL UpdatePortListWMI(PortList& ports_array_local);
+	static BOOL UpdatePortListSetupAPI(PortList& ports_array_local);
 	static BOOL UpdatePortList();
 	static bool IsNumeric(LPCSTR pszString, bool bIgnoreColon);
 	static bool IsNumeric(LPCWSTR pszString, bool bIgnoreColon);
 
-	static BOOL QueryUsingSetupAPI(const GUID& guid, DWORD dwFlags);
+	static BOOL QueryUsingSetupAPI(const GUID& guid, DWORD dwFlags, PortList& ports_array_local);
 	static BOOL QueryDeviceDescription(HDEVINFO hDevInfoSet, SP_DEVINFO_DATA& devInfo, ATL::CHeapPtr<BYTE>& byFriendlyName);
 	static BOOL QueryRegistryPortName(ATL::CRegKey& deviceKey, int& nPort);
 	static BOOL RegQueryValueString(ATL::CRegKey& key, LPCTSTR lpValueName, LPTSTR& pszValue);
