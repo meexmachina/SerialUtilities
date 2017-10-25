@@ -5,7 +5,11 @@ d:\developement\currentprojects\serialport\serialutils\serialutils\debug\stdafx.
 d:\developement\currentprojects\serialport\serialutils\serialutils\debug\genexception.obj
 d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutils.obj
 d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutilsexception.obj
-d:\developement\currentprojects\serialport\serial\serialutilstest\debug\serialutils.lib
+d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutilsnotifier.obj
+d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutilsenumerator.obj
+d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutilscomm.obj
+d:\developement\currentprojects\serialport\serialutils\debug\serialutils.lib
+d:\developement\currentprojects\serialport\serialutils\debug\serialutils.pdb
 d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutils.tlog\cl.command.1.tlog
 d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutils.tlog\cl.read.1.tlog
 d:\developement\currentprojects\serialport\serialutils\serialutils\debug\serialutils.tlog\cl.write.1.tlog

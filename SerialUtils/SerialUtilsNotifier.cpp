@@ -122,7 +122,7 @@ void SerialUtilsNotifier::notification_thread_func(void* instance)
 	HWND hWnd = CreateWindowW(L"SerialUtils", L"SerialUtilsNotifier", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 	if (!hWnd)
 	{
-		//return FALSE;
+		return;
 	}
 	DEV_BROADCAST_DEVICEINTERFACE NotificationFilter;
 	ZeroMemory(&NotificationFilter, sizeof(NotificationFilter));
@@ -143,7 +143,6 @@ void SerialUtilsNotifier::notification_thread_func(void* instance)
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-			//Sleep(100);
 		}
 	}
 }
